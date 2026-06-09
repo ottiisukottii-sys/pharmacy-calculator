@@ -498,9 +498,13 @@
     <div class="popup-title">⚠️ ご利用前にご確認ください</div>
     <div class="popup-text">この計算はあくまでも参考値です。正確な金額、記載のないお薬は薬剤師にご確認ください。</div>
     <label class="popup-check-label">
-      <input type="checkbox" id="popupCheck" onchange="closePopup(this)">
+      <input type="checkbox" id="popupCheck" onchange="onPopupCheck(this)">
       確認しました
     </label>
+    <button id="popupCloseBtn" onclick="closePopup()"
+      style="display:none;width:100%;margin-top:14px;padding:12px;background:var(--accent);color:white;border:none;border-radius:8px;font-size:14px;font-family:inherit;font-weight:700;cursor:pointer;">
+      閉じる
+    </button>
   </div>
 </div>
 
@@ -979,8 +983,11 @@ function renderSummary() {
 
 
 // ポップアップ
-function closePopup(cb) {
-  if (cb.checked) document.getElementById('popupOverlay').style.display = 'none';
+function onPopupCheck(cb) {
+  document.getElementById('popupCloseBtn').style.display = cb.checked ? 'block' : 'none';
+}
+function closePopup() {
+  document.getElementById('popupOverlay').style.display = 'none';
 }
 
 // クリップボードコピー
