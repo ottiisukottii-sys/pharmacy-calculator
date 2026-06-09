@@ -522,7 +522,7 @@
       閉じる
     </button>
     <style>
-      #popupCloseBtn:not([disabled]) { opacity:1; cursor:pointer; background:#0d9488 !important; }
+      #popupCloseBtn:not([disabled]) { opacity:1; cursor:pointer; background:#dc2626 !important; }
       #popupCloseBtn[disabled] { opacity:0.35; cursor:not-allowed; background:#94a3b8 !important; }
     </style>
   </div>
@@ -1028,8 +1028,7 @@ function copyToClipboard() {
   lines.push('');
   lines.push(`合計金額　¥${Math.round(totalPrice).toLocaleString('ja-JP')}`);
 
-  navigator.clipboard.writeText(lines.join('
-')).then(() => {
+  navigator.clipboard.writeText(lines.join('\n')).then(() => {
     const btn = document.getElementById('copyBtn');
     btn.textContent = '✅ コピーしました';
     btn.classList.add('copied');
