@@ -742,27 +742,29 @@ function convertFraction(input) {
 const MP_CAPSULE_PRICE = 1000 / 60;
 
 // ====== 検索 ======
-const searchInput = document.getElementById('searchInput');
-const dropdown = document.getElementById('dropdown');
+let searchInput, dropdown;
+window.addEventListener('load', function() {
+  searchInput = document.getElementById('searchInput');
+  dropdown = document.getElementById('dropdown');
+  searchInput.addEventListener('input', initSearch);
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.search-wrap')) dropdown.classList.remove('open');
+  });
+});
 
-searchInput.addEventListener('input', () => {
+function initSearch() {
   const q = searchInput.value.trim();
   if (!q) { dropdown.classList.remove('open'); return; }
   const hits = drugMaster.filter(d => d.name.includes(q)).slice(0, 10);
   if (!hits.length) { dropdown.classList.remove('open'); return; }
-
-  dropdown.innerHTML = hits.map((d, i) =>
+  dropdown.innerHTML = hits.map(d =>
     `<div class="dropdown-item" onclick="selectDrug(${drugMaster.indexOf(d)})">
       <span class="drug-name">${highlight(d.name, q)}</span>
       <span class="drug-unit">${d.unit} / ¥${d.pricePerUnit.toFixed(1)}</span>
     </div>`
   ).join('');
   dropdown.classList.add('open');
-});
-
-document.addEventListener('click', e => {
-  if (!e.target.closest('.search-wrap')) dropdown.classList.remove('open');
-});
+}
 
 function highlight(name, q) {
   const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -781,7 +783,7 @@ function selectDrug(idx) {
 function clearSelected() {
   selectedDrug = null;
   document.getElementById('selectedBadge').style.display = 'none';
-  searchInput.placeholder = '薬の銘柄名を入力（例：ロキソプロフェン）';
+  searchInput.placeholder = '薬の銘柄名を入力（例：アムロジピン）';
 }
 
 // ====== 薬を追加 ======
