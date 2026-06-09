@@ -516,9 +516,7 @@
       <input type="checkbox" id="popupCheck" onchange="onPopupCheck(this)">
       確認しました
     </label>
-    <button id="popupCloseBtn" onclick="closePopup()" class="popup-close-btn" style="display:none !important">
-      閉じる
-    </button>
+    <div id="popupBtnWrap"></div>
   </div>
 </div>
 
@@ -998,8 +996,12 @@ function renderSummary() {
 
 // ポップアップ
 function onPopupCheck(cb) {
-  const btn = document.getElementById('popupCloseBtn');
-  btn.setAttribute('style', cb.checked ? 'display:block !important' : 'display:none !important');
+  const wrap = document.getElementById('popupBtnWrap');
+  if (cb.checked) {
+    wrap.innerHTML = '<button onclick="closePopup()" style="margin-top:14px;width:100%;padding:12px;background:#1a6eb5;color:white;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;">閉じる</button>';
+  } else {
+    wrap.innerHTML = '';
+  }
 }
 function closePopup() {
   document.getElementById('popupOverlay').style.display = 'none';
