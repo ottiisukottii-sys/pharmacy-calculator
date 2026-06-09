@@ -387,7 +387,6 @@
 
   /* ポップアップ */
   .popup-close-btn {
-    display: none;
     width: 100%;
     margin-top: 14px;
     padding: 12px;
@@ -517,7 +516,7 @@
       <input type="checkbox" id="popupCheck" onchange="onPopupCheck(this)">
       確認しました
     </label>
-    <button id="popupCloseBtn" onclick="closePopup()" class="popup-close-btn">
+    <button id="popupCloseBtn" onclick="closePopup()" class="popup-close-btn" style="display:none !important">
       閉じる
     </button>
   </div>
@@ -1000,11 +999,7 @@ function renderSummary() {
 // ポップアップ
 function onPopupCheck(cb) {
   const btn = document.getElementById('popupCloseBtn');
-  if (cb.checked) {
-    btn.classList.add('visible');
-  } else {
-    btn.classList.remove('visible');
-  }
+  btn.setAttribute('style', cb.checked ? 'display:block !important' : 'display:none !important');
 }
 function closePopup() {
   document.getElementById('popupOverlay').style.display = 'none';
