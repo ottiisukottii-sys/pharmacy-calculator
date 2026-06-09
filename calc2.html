@@ -490,6 +490,26 @@
   #popupCloseBtn2:not([disabled]) { opacity:1 !important; cursor:pointer; background:#dc2626 !important; color:white !important; }
   #popupCloseBtn2[disabled] { opacity:0.35; cursor:not-allowed; background:#94a3b8 !important; }
 
+
+  /* コピーボタン */
+  .btn-copy {
+    width: 100%;
+    margin-top: 14px;
+    padding: 11px;
+    background: white;
+    color: var(--accent);
+    border: 2px solid var(--accent);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    letter-spacing: 0.02em;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .btn-copy:hover { background: var(--accent-light); }
+  .btn-copy.copied { background: var(--accent2); border-color: var(--accent2); color: white; }
 </style>
 </head>
 <body>
@@ -511,7 +531,27 @@
     <style>
       #popupCloseBtn2:not([disabled]) { opacity:1 !important; cursor:pointer; background:#dc2626 !important; color:white !important; }
       #popupCloseBtn2[disabled] { opacity:0.35; cursor:not-allowed; background:#94a3b8 !important; }
-    </style>
+    
+  /* コピーボタン */
+  .btn-copy {
+    width: 100%;
+    margin-top: 14px;
+    padding: 11px;
+    background: white;
+    color: var(--accent);
+    border: 2px solid var(--accent);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    letter-spacing: 0.02em;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .btn-copy:hover { background: var(--accent-light); }
+  .btn-copy.copied { background: var(--accent2); border-color: var(--accent2); color: white; }
+</style>
   </div>
 </div>
 
@@ -579,6 +619,7 @@
   <div class="summary-card" id="summaryCard" style="display:none">
     <div class="summary-title">処方合計</div>
     <div id="summaryRows"></div>
+    <button class="btn-copy" id="copyBtn" onclick="copyToClipboard()">📋 処方合計をコピー</button>
   </div>
 
   <!-- ご参考 -->
@@ -777,6 +818,30 @@ function renderSummary() {
     <div class="summary-row-value large">¥${Math.round(totalPrice).toLocaleString('ja-JP')}</div>
   </div>`;
 }
+
+// クリップボードコピー
+function copyToClipboard() {
+  if (!addedDrugs.length) return;
+  const totalPrice = addedDrugs.reduce((s, d) => s + d.price, 0);
+
+  let lines = ['処方合計', ''];
+  addedDrugs.forEach(d => {
+    lines.push(`${d.name}　${fmtNum(d.totalAmount)} ${d.unit}`);
+  });
+  lines.push('');
+  lines.push(`薬剤販売価格合計　¥${Math.round(totalPrice).toLocaleString('ja-JP')}`);
+
+  navigator.clipboard.writeText(lines.join('\n')).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = '✅ コピーしました';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.innerHTML = '📋 処方合計をコピー';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
 </script>
 </body>
 </html>
