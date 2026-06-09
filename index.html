@@ -386,6 +386,22 @@
   input::placeholder { color: #38bdf8; font-style: italic; }
 
   /* ポップアップ */
+  .popup-close-btn {
+    display: none;
+    width: 100%;
+    margin-top: 14px;
+    padding: 12px;
+    background: #1a6eb5;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .popup-close-btn.visible { display: block; }
+
   .popup-overlay {
     position: fixed; inset: 0;
     background: rgba(0,0,0,0.5);
@@ -501,8 +517,7 @@
       <input type="checkbox" id="popupCheck" onchange="onPopupCheck(this)">
       確認しました
     </label>
-    <button id="popupCloseBtn" onclick="closePopup()"
-      style="display:none;width:100%;margin-top:14px;padding:12px;background:var(--accent);color:white;border:none;border-radius:8px;font-size:14px;font-family:inherit;font-weight:700;cursor:pointer;">
+    <button id="popupCloseBtn" onclick="closePopup()" class="popup-close-btn">
       閉じる
     </button>
   </div>
@@ -984,7 +999,12 @@ function renderSummary() {
 
 // ポップアップ
 function onPopupCheck(cb) {
-  document.getElementById('popupCloseBtn').style.display = cb.checked ? 'block' : 'none';
+  const btn = document.getElementById('popupCloseBtn');
+  if (cb.checked) {
+    btn.classList.add('visible');
+  } else {
+    btn.classList.remove('visible');
+  }
 }
 function closePopup() {
   document.getElementById('popupOverlay').style.display = 'none';
