@@ -512,11 +512,10 @@
   <div class="popup-box">
     <div class="popup-title">⚠️ ご利用前にご確認ください</div>
     <div class="popup-text">この計算はあくまでも参考値です。正確な金額、記載のないお薬は薬剤師にご確認ください。</div>
-    <label class="popup-check-label">
-      <input type="checkbox" id="popupCheck" onchange="onPopupCheck(this)">
-      確認しました
-    </label>
-    <div id="popupBtnWrap"></div>
+    <button onclick="document.getElementById('popupOverlay').style.display='none'"
+      style="margin-top:18px;width:100%;padding:14px;background:#1a6eb5;color:white;border:none;border-radius:8px;font-size:16px;font-weight:700;cursor:pointer;">
+      確認して閉じる
+    </button>
   </div>
 </div>
 
@@ -994,18 +993,7 @@ function renderSummary() {
 
 
 
-// ポップアップ
-function onPopupCheck(cb) {
-  const wrap = document.getElementById('popupBtnWrap');
-  if (cb.checked) {
-    wrap.innerHTML = '<button onclick="closePopup()" style="margin-top:14px;width:100%;padding:12px;background:#1a6eb5;color:white;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;">閉じる</button>';
-  } else {
-    wrap.innerHTML = '';
-  }
-}
-function closePopup() {
-  document.getElementById('popupOverlay').style.display = 'none';
-}
+// ポップアップ（ボタン直接閉じ）
 
 // クリップボードコピー
 function copyToClipboard() {
