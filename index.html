@@ -512,10 +512,19 @@
   <div class="popup-box">
     <div class="popup-title">⚠️ ご利用前にご確認ください</div>
     <div class="popup-text">この計算はあくまでも参考値です。正確な金額、記載のないお薬は薬剤師にご確認ください。</div>
-    <button onclick="document.getElementById('popupOverlay').style.display='none'"
-      style="margin-top:18px;width:100%;padding:14px;background:#1a6eb5;color:white;border:none;border-radius:8px;font-size:16px;font-weight:700;cursor:pointer;">
-      確認して閉じる
+    <label class="popup-check-label" style="margin-top:14px">
+      <input type="checkbox" id="popupCheck" onchange="document.getElementById('popupCloseBtn').disabled=!this.checked">
+      確認しました
+    </label>
+    <button id="popupCloseBtn" disabled
+      onclick="document.getElementById('popupOverlay').style.display='none'"
+      style="margin-top:14px;width:100%;padding:14px;background:#1a6eb5;color:white;border:none;border-radius:8px;font-size:16px;font-weight:700;cursor:pointer;opacity:0.4;">
+      閉じる
     </button>
+    <style>
+      #popupCloseBtn:not([disabled]) { opacity:1; cursor:pointer; }
+      #popupCloseBtn[disabled] { opacity:0.4; cursor:not-allowed; }
+    </style>
   </div>
 </div>
 
